@@ -1,8 +1,32 @@
 'use client';
 
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function HomePage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Check authentication status from backend
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/linkedin/userinfo');
+        const data = await res.json();
+        setIsLoggedIn(!!data.authenticated);
+        setUserName(data.name || null);
+      } catch {
+        setIsLoggedIn(false);
+        setUserName(null);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // Prevent auto-login: do not redirect to LinkedIn login automatically when not authenticated
+  // Only show the login button and wait for user action
+
   const handleLinkedInLogin = () => {
     window.location.href = '/api/linkedin';
   };
@@ -46,6 +70,7 @@ export default function HomePage() {
     }
   ];
 
+
   return (
     <div className="flex-1">
       {/* Navigation */}
@@ -58,9 +83,27 @@ export default function HomePage() {
             <span className="font-semibold text-3xl text-gray-600">LinkedIn AI Agent</span>
           </div>
           <div className="flex items-center space-x-4 text-lg">
-            <Link href="/generate-news-post" className="btn-primary">
-              Get Started
-            </Link>
+            {!isLoggedIn ? (
+              <button
+                className="btn-primary"
+                onClick={handleLinkedInLogin}
+              >
+                Login to LinkedIn
+              </button>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <span className="text-green-700 font-semibold">✅ {userName ? `Logged in as ${userName}` : 'Logged in with LinkedIn'}</span>
+                <button
+                  className="btn-secondary border border-green-700 text-green-700 px-3 py-1 rounded hover:bg-green-50 transition"
+                  onClick={async () => {
+                    await fetch('/api/linkedin/logout', { method: 'POST', credentials: 'include' });
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </nav>
