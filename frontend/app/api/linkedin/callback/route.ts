@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const CLIENT_ID = process.env.LINKEDIN_CLIENT_ID!;
 const CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET!;
 const REDIRECT_URI = process.env.LINKEDIN_REDIRECT_URI!;
-const HOME_URL = process.env.NEXT_PUBLIC_HOME_URL || 'http://localhost:3000/';
+const HOME_URL = process.env.NEXT_PUBLIC_HOME_URL!;
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
