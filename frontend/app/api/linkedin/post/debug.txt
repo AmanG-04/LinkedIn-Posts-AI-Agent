@@ -1,0 +1,10 @@
+Debug checklist for LinkedIn profile fetch failure:
+
+1. Is the access token present in the cookie? (Check browser dev tools > Application > Cookies)
+2. Is the access token expired? (Tokens are short-lived by default)
+3. Does the LinkedIn app have the 'r_liteprofile' and 'w_member_social' permissions?
+4. Is the access token being sent in the Authorization header as 'Bearer <token>'?
+5. Is the LinkedIn API returning an error message or status code? (Check the response body)
+6. Is the LinkedIn API endpoint correct? (Should be https://api.linkedin.com/v2/me)
+
+If you want, log the profile fetch response for more details.
