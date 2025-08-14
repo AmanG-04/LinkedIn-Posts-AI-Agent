@@ -1,0 +1,100 @@
+{
+  "user_profile": {
+    "id": "john-doe-123",
+    "name": "John Doe",
+    "headline": "Senior Software Engineer | AI/ML Enthusiast | Building the Future",
+    "summary": "Passionate software engineer with 5+ years of experience in building scalable applications. Expertise in Python, JavaScript, and cloud technologies. Currently focused on AI/ML implementations and their real-world applications.",
+    "industry": "Technology",
+    "company": "TechCorp Inc.",
+    "position": "Senior Software Engineer",
+    "location": "San Francisco, CA",
+    "skills": [
+      "Python",
+      "JavaScript", 
+      "Machine Learning",
+      "Cloud Computing",
+      "React",
+      "FastAPI",
+      "Docker",
+      "AWS"
+    ],
+    "interests": [
+      "Artificial Intelligence",
+      "Software Architecture", 
+      "Open Source",
+      "Tech Innovation",
+      "Startups"
+    ],
+    "experience": [
+      {
+        "title": "Senior Software Engineer",
+        "company": "TechCorp Inc.",
+        "duration": "2021 - Present",
+        "description": "Lead development of AI-powered applications and microservices architecture"
+      },
+      {
+        "title": "Software Engineer", 
+        "company": "StartupXYZ",
+        "duration": "2019 - 2021",
+        "description": "Built full-stack web applications and RESTful APIs"
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor of Science in Computer Science",
+        "school": "University of California, Berkeley",
+        "year": "2019"
+      }
+    ]
+  ,
+  "tone": "Professional and insightful"
+  },
+  "content_strategies": {
+    "thought_leadership": {
+      "frequency": "once a week",
+      "topics": ["Industry insights", "Personal experiences", "Predictions", "Analysis"],
+      "tone": "Professional and insightful"
+    },
+    "educational": {
+      "frequency": "once a week",
+      "topics": ["How-to guides", "Tips and tricks", "Best practices", "Tool reviews"],
+      "tone": "Helpful and informative"
+    },
+    "engagement": {
+      "frequency": "once a week",
+      "topics": ["Questions", "Polls", "Behind-the-scenes", "Personal stories"],
+      "tone": "Conversational and approachable"
+    }
+  },
+  "post_analytics": {
+    "recent_posts": [
+      {
+        "id": "post1",
+        "content": "Sharing insights on AI implementation...",
+        "date": "2025-08-07",
+        "likes": 45,
+        "comments": 12,
+        "shares": 8,
+        "impressions": 1250,
+        "engagement_rate": 5.2
+      },
+      {
+        "id": "post2",
+        "content": "The future of software development...",
+        "date": "2025-08-05",
+        "likes": 78,
+        "comments": 23,
+        "shares": 15,
+        "impressions": 2100,
+        "engagement_rate": 5.5
+      }
+    ],
+    "overall_metrics": {
+      "avg_engagement_rate": 5.3,
+      "total_followers": 1250,
+      "follower_growth": "+12% this month",
+      "best_posting_times": ["9:00 AM", "1:00 PM", "5:00 PM"],
+      "top_performing_hashtags": ["#AI", "#SoftwareEngineering", "#TechInnovation"]
+    }
+  }
+}
