@@ -50,6 +50,30 @@ The project follows a modern full-stack architecture, separating concerns betwee
   - Used for all secrets and configuration, following best practices for security and deployment.
 
 ---
+## Thought process
+
+- **Design alternatives considered**
+
+  - Option A: Server-side post generation (chosen) — centralizes prompt logic, easier to secure API keys.
+  - Option B: Client-side generation — reduces backend load but exposes keys and inconsistent environments.
+  - Rationale: server-side generation offered better security, consistent prompts, and simpler analytics collection.
+
+- **Prompt engineering notes (examples)**
+
+  - Core pattern: [context] + [tone: professional] + [call-to-action] + [hashtags].
+  - Example prompt used in production: "Write a concise professional LinkedIn post about {topic} for a {role} in {industry}. Include 1-2 short insights and a call-to-action."
+---
+## Future Considerations
+
+- **AI-powered Image Generation:** Create custom graphics for posts using generative AI models.
+- **Competitor Analysis:** Analyze competitor content strategies to inform user recommendations.
+- **Sentiment Analysis:** Evaluate audience sentiment on posts for actionable insights.
+- **Network Growth Strategies:** Suggest connection and engagement tactics to expand user reach.
+- **Multi-language Support:** Enable content creation and analysis in multiple languages.
+- **Integration with Other Platforms:** Adapt and distribute content across various social and professional networks.
+- **Scalability:** As user demand grows, consider strategies for scaling the backend (e.g., load balancing, microservices).
+- **AI Model Updates:** Stay informed about advancements in AI models (e.g., new versions of Gemini/OpenAI) and plan for regular updates.
+- **User Feedback:** Implement mechanisms for collecting user feedback on post quality and relevance to inform future improvements.
 
 ## Summary
 
