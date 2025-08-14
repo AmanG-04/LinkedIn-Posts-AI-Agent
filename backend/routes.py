@@ -1,7 +1,8 @@
+
 """
 API route handlers for the LinkedIn Posts AI Agent
 """
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Response
 from starlette.responses import JSONResponse
 from models import (
     UserInput, GenerateRequest, PostContent, 
@@ -18,6 +19,14 @@ import traceback
 
 """Using a single router for all endpoints"""
 router = APIRouter()  
+
+# Logout endpoint must come after router is defined
+@router.post("/api/linkedin/logout")
+def linkedin_logout():
+    """Logout by clearing the LinkedIn access token cookie."""
+    response = JSONResponse(content={"message": "Logged out"})
+    response.delete_cookie("linkedin_access_token")
+    return response
 
 # TLDR news endpoint
 @router.get("/tldr-news")
