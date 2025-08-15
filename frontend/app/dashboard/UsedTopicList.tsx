@@ -24,7 +24,7 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
     if (!viewedPost) return;
     setIsScheduling(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/schedule-post', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/schedule-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: viewedPost, scheduled_time: scheduledTime }),
@@ -49,8 +49,8 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
       const data: { [topic: string]: TopicData } = {};
       await Promise.all(
         topics.map(async (topic) => {
-          try {
-            const res = await fetch(`http://127.0.0.1:8000/get-generated-post/${encodeURIComponent(topic)}`);
+            try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/get-generated-post/${encodeURIComponent(topic)}`);
             const json = await res.json();
             data[topic] = { post: json.post || null, linkedin_post_url: json.linkedin_post_url || null };
           } catch {
@@ -67,7 +67,7 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
   const handleView = async (topic: string) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/get-generated-post/${encodeURIComponent(topic)}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/get-generated-post/${encodeURIComponent(topic)}`);
       const data = await res.json();
       setViewedPost(data.post || 'No post found.');
       setViewedTopic(topic);
@@ -90,13 +90,13 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
       const data = await res.json();
       if (res.ok && data.postUrl) {
         // Save the LinkedIn post URL in MongoDB for this topic
-        await fetch('http://127.0.0.1:8000/save-generated-post', {
+  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/save-generated-post`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ topic, post, linkedin_post_url: data.postUrl }),
         });
         // Refresh only this topic's data
-        const res2 = await fetch(`http://127.0.0.1:8000/get-generated-post/${encodeURIComponent(topic)}`);
+  const res2 = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/get-generated-post/${encodeURIComponent(topic)}`);
         const json = await res2.json();
         setTopicData((prev) => ({ ...prev, [topic]: { post: json.post || null, linkedin_post_url: json.linkedin_post_url || null } }));
         alert('Successfully posted to LinkedIn!');
@@ -147,7 +147,7 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
                     onClick={async () => {
                       setIsLoading(true);
                       try {
-                        const res = await fetch(`http://127.0.0.1:8000/get-generated-post/${encodeURIComponent(topic)}`);
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/get-generated-post/${encodeURIComponent(topic)}`);
                         const data = await res.json();
                         if (data.post) {
                           // Always use the full generated post from MongoDB
@@ -204,7 +204,7 @@ const UsedTopicList: React.FC<UsedTopicListProps> = ({ topics }) => {
                     if (viewedTopic) {
                       setIsPosting(true);
                       try {
-                        const res = await fetch(`http://127.0.0.1:8000/get-generated-post/${encodeURIComponent(viewedTopic)}`);
+                        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/get-generated-post/${encodeURIComponent(viewedTopic)}`);
                         const data = await res.json();
                         if (data.post) {
                           await handlePostToLinkedIn(data.post, viewedTopic);

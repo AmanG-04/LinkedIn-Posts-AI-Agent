@@ -7,7 +7,7 @@ export function useScheduledPostsEvents() {
   useEffect(() => {
     async function fetchScheduledPosts() {
       try {
-        const res = await fetch('http://127.0.0.1:8000/scheduled-posts');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/scheduled-posts`);
         const data = await res.json();
         if (data.scheduled_posts) {
           const mapped = data.scheduled_posts.map((post: any) => ({
