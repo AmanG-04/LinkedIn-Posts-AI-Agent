@@ -33,7 +33,7 @@ export default function ClientDashboard() {
   const handleSchedulePost = async (scheduledTime: string) => {
     setIsScheduling(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/schedule-post', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/schedule-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: overlayPost, scheduled_time: scheduledTime }),
@@ -70,7 +70,7 @@ export default function ClientDashboard() {
     const fetchNonPostedTopics = async () => {
       setIsNewsLoading(true);
       try {
-        const res = await fetch('http://127.0.0.1:8000/non-posted-topics');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/non-posted-topics`);
         const data = await res.json();
         setTldrNews(data.topics || []);
       } catch (e) {
@@ -80,7 +80,7 @@ export default function ClientDashboard() {
     };
     const fetchUsedTopics = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:8000/used-topics');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/used-topics`);
         const data = await res.json();
         setUsedTopics(data.topics || []);
       } catch (e) {
@@ -93,7 +93,7 @@ export default function ClientDashboard() {
 
   const markTopicAsPosted = async (topic: string) => {
     try {
-      await fetch('http://127.0.0.1:8000/mark-topic-posted', {
+  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/mark-topic-posted`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic }),
@@ -103,7 +103,7 @@ export default function ClientDashboard() {
 
   const saveGeneratedPost = async (topic: string, post: string, linkedin_post_url?: string) => {
     try {
-      await fetch('http://127.0.0.1:8000/save-generated-post', {
+  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/save-generated-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, post, linkedin_post_url }),
@@ -116,7 +116,7 @@ export default function ClientDashboard() {
     setSelectedNewsIndex(idx);
     setRegenerateTopic(topic);
     try {
-      const res = await fetch('http://127.0.0.1:8000/generate-news-post', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/generate-news-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: topic }),
@@ -142,7 +142,7 @@ export default function ClientDashboard() {
     if (!regenerateTopic) return;
     setIsRegenerating(true);
     try {
-      const res = await fetch('http://127.0.0.1:8000/generate-news-post', {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/generate-news-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: regenerateTopic }),
@@ -196,7 +196,7 @@ export default function ClientDashboard() {
     setPost('Generating your post, please wait...');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/generate-post', {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/generate-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role, industry, content_type: contentType }),
@@ -213,7 +213,7 @@ export default function ClientDashboard() {
   const fetchProfileAnalysis = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/profile/analysis');
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/profile/analysis`);
       const data = await response.json();
       setPost(JSON.stringify(data, null, 2));
     } catch (error) {
@@ -225,7 +225,7 @@ export default function ClientDashboard() {
   const fetchIndustryTrends = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/industry/trends?industry=${industry || 'technology'}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/industry/trends?industry=${industry || 'technology'}`);
       const data = await response.json();
       setPost(JSON.stringify(data, null, 2));
     } catch (error) {
@@ -237,7 +237,7 @@ export default function ClientDashboard() {
   const fetchAnalytics = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:8000/analytics/summary');
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/analytics/summary`);
       const data = await response.json();
       setPost(JSON.stringify(data, null, 2));
     } catch (error) {
