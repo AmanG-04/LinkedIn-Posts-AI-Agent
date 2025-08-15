@@ -20,7 +20,7 @@ export default function GeneratePersonalizedPostPage() {
     setError(null);
     setPostStatus(null);
     try {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/generate-personalized-content`, {
+      const res = await fetch('/api/generate-personalized-post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic, content_type: contentType }),
@@ -120,7 +120,7 @@ export default function GeneratePersonalizedPostPage() {
                   setError(null);
                   setPostStatus(null);
                   try {
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/generate-personalized-content`, {
+                    const res = await fetch('/api/generate-personalized-post', {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
                       body: JSON.stringify({ topic, content_type: contentType }),
