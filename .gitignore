@@ -19,6 +19,8 @@ node_modules/
 
 # production
 /build
+*.py[cod]
+__pycache__/
 
 # misc
 .DS_Store
