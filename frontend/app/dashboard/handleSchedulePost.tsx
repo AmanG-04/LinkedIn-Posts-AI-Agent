@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://linkedin-agent-backend.onrender.com';
+
 // Handler to schedule a post (must access overlayPost and setOverlayPost)
 const [isScheduling, setIsScheduling] = useState(false);
 
@@ -9,7 +11,7 @@ const [overlayPost, setOverlayPost] = useState<string>('');
 const handleSchedulePost = async (scheduledTime: string) => {
   setIsScheduling(true);
   try {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/schedule-post`, {
+  const res = await fetch(`${backendUrl}/schedule-post`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ content: overlayPost, scheduled_time: scheduledTime }),

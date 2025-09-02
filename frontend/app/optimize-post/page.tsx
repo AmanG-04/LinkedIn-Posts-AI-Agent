@@ -1,7 +1,8 @@
-
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://linkedin-agent-backend.onrender.com';
 
 export default function OptimizePostPage() {
   const [postContent, setPostContent] = useState('');
@@ -15,7 +16,7 @@ export default function OptimizePostPage() {
     setResult(null);
     setError(null);
     try {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/optimize-post`, {
+      const res = await fetch(`${backendUrl}/optimize-post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: postContent }),

@@ -7,7 +7,8 @@ export function useScheduledPostsEvents() {
   useEffect(() => {
     async function fetchScheduledPosts() {
       try {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://127.0.0.1:8000'}/scheduled-posts`);
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://linkedin-agent-backend.onrender.com';
+        const res = await fetch(`${backendUrl}/scheduled-posts`);
         const data = await res.json();
         if (data.scheduled_posts) {
           const mapped = data.scheduled_posts.map((post: any) => ({

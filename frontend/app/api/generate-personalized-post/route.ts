@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://linkedin-agent-backend.onrender.com';
     const res = await fetch(
-      process.env.NEXT_PUBLIC_BACKEND_URL + "/generate-personalized-content",
+      backendUrl + "/generate-personalized-content",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
