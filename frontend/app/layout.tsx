@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { useEffect } from "react";
+import BackendPing from "./components/BackendPing";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +25,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useEffect(() => {
-    fetch("https://linkedin-agent-backend.onrender.com/").catch(() => {});
-  }, []);
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
+        <BackendPing />
         <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 to-blue-50">
           {children}
         </div>
