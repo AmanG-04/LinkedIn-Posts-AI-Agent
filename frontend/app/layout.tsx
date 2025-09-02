@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { useEffect } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,7 +18,6 @@ export const metadata: Metadata = {
   description: "AI-powered LinkedIn content creation and management system",
   keywords: ["LinkedIn", "AI", "Content Creation", "Social Media", "Automation"],
   authors: [{ name: "Your Name" }],
-  // viewport removed; handled in page.tsx as per Next.js 15
 };
 
 export default function RootLayout({
@@ -25,6 +25,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  useEffect(() => {
+    fetch("https://linkedin-agent-backend.onrender.com/").catch(() => {});
+  }, []);
+
   return (
     <html lang="en">
       <body
