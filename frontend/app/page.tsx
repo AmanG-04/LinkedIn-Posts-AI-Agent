@@ -7,6 +7,25 @@ import { useEffect, useState } from 'react';
 export default function HomePage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [timer, setTimer] = useState(40);
+  const [backendStatus, setBackendStatus] = useState<'starting' | 'running'>('starting');
+
+  useEffect(() => {
+    // Backend wake-up timer
+    if (timer > 0 && backendStatus === 'starting') {
+      const interval = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            setBackendStatus('running');
+            clearInterval(interval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer, backendStatus]);
 
   useEffect(() => {
     // Check authentication status from backend
@@ -73,6 +92,16 @@ export default function HomePage() {
 
   return (
     <div className="flex-1">
+      {/* Backend Powering Up Timer */}
+      {backendStatus === 'starting' ? (
+        <div className="w-full text-center py-2 bg-yellow-50 text-yellow-700 font-semibold">
+          Backend is powering up, please wait... ({timer}s)
+        </div>
+      ) : (
+        <div className="w-full text-center py-2 bg-green-50 text-green-700 font-semibold">
+          Backend is running!
+        </div>
+      )}
       {/* Navigation */}
       <nav className="px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
