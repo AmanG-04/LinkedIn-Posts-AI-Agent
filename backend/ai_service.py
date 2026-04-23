@@ -19,6 +19,7 @@ class AIService:
         if Config.GEMINI_API_KEY:
             genai.configure(api_key=Config.GEMINI_API_KEY)
             self.model = genai.GenerativeModel(Config.GEMINI_MODEL)
+            print(f"Using Gemini model: {Config.GEMINI_MODEL}")
         else:
             self.model = None
     
@@ -91,11 +92,9 @@ class AIService:
         
         Focus on maximizing likes, comments, and shares while maintaining professionalism.
         """
-        
         response = self.model.generate_content(prompt)
         if not response or not response.text:
             raise Exception("Empty response from AI model")
-        
         return response.text
     def generate_news_post(self, title: str, user_profile: dict) -> str:
         """Generate a LinkedIn post based on a news item"""

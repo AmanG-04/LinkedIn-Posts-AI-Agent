@@ -31,7 +31,7 @@ class Config:
     USER_PROFILE_FILE = DATA_DIR / "user_profile.json"
     
     # Gemini model settings
-    GEMINI_MODEL = "gemini-1.5-flash"
+    GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite")
     
     @classmethod
     def validate_config(cls):
