@@ -5,7 +5,7 @@ Autonomous TLDR news fetcher and MongoDB integration
 import os
 import feedparser
 from pymongo import MongoClient
-from pymongo.errors import ServerSelectionTimeoutError
+from pymongo.errors import PyMongoError, ServerSelectionTimeoutError
 import threading
 import time
 import google.generativeai as genai
@@ -104,7 +104,7 @@ class AIService:
 ai_service = AIService()
 
 # MongoDB setup with connection check
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+MONGO_URI = os.getenv("MONGODB_URI") or os.getenv("MONGO_URI") or "mongodb://localhost:27017/"
 try:
     client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
     # Test connection
@@ -112,8 +112,8 @@ try:
     db = client["linkedin_ai_agent"]
     tldr_collection = db["tldr_news"]
     MONGO_AVAILABLE = True
-except ServerSelectionTimeoutError:
-    print("Warning: Could not connect to MongoDB, TLDR news will be disabled.")
+except PyMongoError as exc:
+    print(f"Warning: MongoDB unavailable ({exc}); TLDR news will be disabled.")
     client = None
     tldr_collection = None
     MONGO_AVAILABLE = False
@@ -143,7 +143,7 @@ def fetch_and_store_tldr_news():
                         "published": entry.published,
                         "processed": False
                     })
-    except ServerSelectionTimeoutError:
+    except PyMongoError:
         # Could not reach MongoDB, skip this cycle
         print("Warning: MongoDB unavailable during TLDR fetch.")
 # Function to extract subtopics from a title
@@ -154,6 +154,8 @@ def extract_subtopics(title: str) -> list:
 # Function to check if a topic has already been used
 def is_topic_used(topic: str) -> bool:
     """Check if a topic has already been used."""
+    if not MONGO_AVAILABLE or tldr_collection is None:
+        return False
     # Check MongoDB for used topics by 'subtopic' and 'posted' True
     return tldr_collection.find_one({"subtopic": topic, "posted": True}) is not None
 # Function to fetch topics that have not been posted about
