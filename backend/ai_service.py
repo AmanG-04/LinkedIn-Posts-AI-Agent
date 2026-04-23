@@ -5,7 +5,7 @@ Autonomous TLDR news fetcher and MongoDB integration
 import os
 import feedparser
 from pymongo import MongoClient
-from pymongo.errors import PyMongoError, ServerSelectionTimeoutError
+from pymongo.errors import PyMongoError
 import threading
 import time
 import google.generativeai as genai
@@ -29,15 +29,33 @@ class AIService:
         """Generate personalized content based on user profile"""
         if not self.is_configured():
             raise Exception("AI service not configured. Please set GEMINI_API_KEY.")
+
+        name = user_profile.get("name", "a LinkedIn professional")
+        headline = user_profile.get("headline", "industry expert")
+        industry = user_profile.get("industry", "Technology")
+        position = user_profile.get("position", "Professional")
+        company = user_profile.get("company", "their organization")
+        summary = user_profile.get("summary", "Experienced professional with practical insights.")
+
+        skills = user_profile.get("skills") or []
+        if not isinstance(skills, list):
+            skills = [str(skills)]
+        skills_text = ", ".join(str(skill) for skill in skills[:5]) if skills else "Leadership, Communication"
+
+        interests = user_profile.get("interests") or []
+        if not isinstance(interests, list):
+            interests = [str(interests)]
+        interests_text = ", ".join(str(interest) for interest in interests[:3]) if interests else "Innovation, Growth"
+
         prompt = f"""
-        Act as a LinkedIn content expert. You're writing for {user_profile['name']}, who is a {user_profile['headline']}.
+        Act as a LinkedIn content expert. You're writing for {name}, who is a {headline}.
         Add a hook to grab attention.
         User Background:
-        - Industry: {user_profile['industry']}
-        - Position: {user_profile['position']} at {user_profile['company']}
-        - Skills: {', '.join(user_profile['skills'][:5])}
-        - Interests: {', '.join(user_profile['interests'][:3])}
-        - Summary: {user_profile['summary']}
+        - Industry: {industry}
+        - Position: {position} at {company}
+        - Skills: {skills_text}
+        - Interests: {interests_text}
+        - Summary: {summary}
 
         Generate a {content_type} LinkedIn post about '{topic}' that:
         1. Reflects their expertise and experience

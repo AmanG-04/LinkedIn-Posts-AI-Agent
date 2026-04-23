@@ -14,7 +14,14 @@ export async function POST(request: Request) {
     );
 
     if (!res.ok) {
-      return NextResponse.json({ error: "Failed to generate personalized post" }, { status: 500 });
+      let backendError = "Failed to generate personalized post";
+      try {
+        const errJson = await res.json();
+        backendError = errJson?.detail || errJson?.error || backendError;
+      } catch {
+        // Keep generic fallback when backend response is not JSON.
+      }
+      return NextResponse.json({ error: backendError }, { status: res.status });
     }
 
     const data = await res.json();

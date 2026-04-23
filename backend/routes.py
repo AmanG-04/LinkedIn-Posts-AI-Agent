@@ -108,6 +108,7 @@ def generate_personalized_content(request: GenerateRequest):
         result = ContentService.generate_personalized_content(request.topic, request.content_type)
         return JSONResponse(content=result)
     except Exception as e:
+        print("Error in /generate-personalized-content:", traceback.format_exc())
         raise HTTPException(status_code=500, detail=str(e))
 
 # Engagement optimization endpoints
